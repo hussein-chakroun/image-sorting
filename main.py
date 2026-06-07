@@ -9,8 +9,8 @@ def load_known_face_encodings(source_folder):
     for filename in [f for f in os.listdir(source_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]:
         image_path = os.path.join(source_folder, filename)
         image = face_recognition.load_image_file(image_path)
-        face_locations = face_recognition.face_locations(image)
-        face_encodings = face_recognition.face_encodings(image, face_locations)
+        face_locations = face_recognition.face_locations(image, model="cnn")
+        face_encodings = face_recognition.face_encodings(image, face_locations, num_jitters=100, model="large")
 
         if face_encodings:
             known_face_encodings.append(face_encodings[0])
@@ -25,8 +25,8 @@ def sort_images_by_person(source_folder, output_folder, known_face_encodings, kn
     for filename in [f for f in os.listdir(source_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]:
         image_path = os.path.join(source_folder, filename)
         image = face_recognition.load_image_file(image_path)
-        face_locations = face_recognition.face_locations(image)
-        face_encodings = face_recognition.face_encodings(image, face_locations)
+        face_locations = face_recognition.face_locations(image, model="cnn")
+        face_encodings = face_recognition.face_encodings(image, face_locations, num_jitters=100, model="large")
 
         if face_encodings:
             face_encoding = face_encodings[0]
